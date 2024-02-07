@@ -1,14 +1,16 @@
 package com.productservice.productservice.services;
 
-import org.springframework.web.bind.annotation.*;
+import com.productservice.productservice.dtos.GenericProductDTO;
+
+import java.util.List;
 
 public interface ProductService {
 
-    void getAllProducts();
+    List<GenericProductDTO> getAllProducts();
 
-    String getProductById(Long id);
+    GenericProductDTO getProductById(Long id);
 
-    void createProduct();
+    GenericProductDTO createProduct(GenericProductDTO genericProductDTO);
 
     void updateProductById(Long id);
 
