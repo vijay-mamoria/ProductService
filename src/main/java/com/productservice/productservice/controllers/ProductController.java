@@ -1,7 +1,7 @@
 package com.productservice.productservice.controllers;
 
-import com.productservice.productservice.dtos.FakeStoreProductDTO;
 import com.productservice.productservice.dtos.GenericProductDTO;
+import com.productservice.productservice.exceptions.ProductNotFoundException;
 import com.productservice.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +30,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public GenericProductDTO getProductById(@PathVariable("id") Long id){
+    public GenericProductDTO getProductById(@PathVariable("id") Long id) throws ProductNotFoundException {
         return productService.getProductById(id);
     }
 
@@ -40,14 +40,34 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public void updateProductById(@PathVariable("id") Long id){
-
+    public GenericProductDTO updateProductById(@PathVariable("id") Long id, GenericProductDTO genericProductDTO){
+        return productService.updateProductById(id, genericProductDTO);
     }
 
+    @PatchMapping("/{id}")
+    public GenericProductDTO patchProductById(@PathVariable("id") Long id, GenericProductDTO genericProductDTO) throws ProductNotFoundException {
+        return productService.patchProductById(id, genericProductDTO);
+    }
+
+    /**
+     * @ResponseStatus(HttpStatus.NO_CONTENT) - Use with void return type.
+     * @param id
+     */
     @DeleteMapping("/{id}")
-    public void deleteProductById(@PathVariable("id") Long id){
-
+    public GenericProductDTO deleteProductById(@PathVariable("id") Long id) throws ProductNotFoundException {
+        return productService.deleteProductById(id);
     }
+
+    /**
+     * Moved to GlobalExceptionHandler for Global exception handling for all controllers.
+     */
+//    @ExceptionHandler(ProductNotFoundException.class)
+//    private ResponseEntity<ExceptionDTO> handleProductNotFoundException(ProductNotFoundException productNotFoundException){
+//        ExceptionDTO exceptionDTO = new ExceptionDTO();
+//        exceptionDTO.setMessage(productNotFoundException.getMessage());
+//        exceptionDTO.setHttpStatus(HttpStatus.NOT_FOUND);
+//        return new ResponseEntity(exceptionDTO, HttpStatus.NOT_FOUND);
+//    }
 }
 
 /*

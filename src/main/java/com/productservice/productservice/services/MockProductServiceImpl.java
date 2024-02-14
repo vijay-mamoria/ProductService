@@ -24,12 +24,19 @@ public class MockProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void updateProductById(Long id) {
+    public GenericProductDTO updateProductById(Long id, GenericProductDTO genericProductDTO) {
 
+        return null;
     }
 
     @Override
-    public void deleteProductById(Long id) {
+    public GenericProductDTO patchProductById(Long id, GenericProductDTO genericProductDTO) {
+        return null;
+    }
 
+    @Override
+    public GenericProductDTO deleteProductById(Long id) {
+
+        return null;
     }
 }
