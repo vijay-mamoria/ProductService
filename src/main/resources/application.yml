@@ -1,0 +1,10 @@
+server:
+  port: 3030
+
+#FakeStore config variables.
+fakestore:
+  api:
+    url: https://fakestoreapi.com
+    path:
+      products: /products
+      categories: /categories

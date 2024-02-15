@@ -4,6 +4,7 @@ import com.productservice.productservice.assemblers.ProductDTOAssembler;
 import com.productservice.productservice.dtos.FakeStoreProductDTO;
 import com.productservice.productservice.dtos.GenericProductDTO;
 import com.productservice.productservice.exceptions.ProductNotFoundException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -21,11 +22,17 @@ public class FakeStoreClientAdapter implements ProductStoreAdapter {
 
     //TODO  Replace with WebClient as RestTemplate is deprecated.
     private RestTemplateBuilder restTemplateBuilder;
-    private final static String genericProductUrl = "https://fakestoreapi.com/products";
-    private final static String specificProductUrl = "https://fakestoreapi.com/products/{id}";
+    private String fakeStoreUrl;
+    private String pathForProducts;
+    private String genericProductUrl;
+    private String specificProductUrl;
 
-    public FakeStoreClientAdapter(RestTemplateBuilder restTemplateBuilder){
+    public FakeStoreClientAdapter(RestTemplateBuilder restTemplateBuilder,
+                                  @Value("${fakestore.api.url}") String fakeStoreUrl,
+                                  @Value("${fakestore.api.path.products}") String pathForProducts){
         this.restTemplateBuilder = restTemplateBuilder;
+        this.genericProductUrl = fakeStoreUrl + pathForProducts;
+        this.specificProductUrl = genericProductUrl + "/{id}";
     }
 
     @Override
