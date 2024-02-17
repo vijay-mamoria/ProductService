@@ -1,11 +1,11 @@
 package com.productservice.productservice.models;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -13,8 +13,10 @@ import lombok.Setter;
 public class BaseModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(generator = "custom_generator") //Configure a Custom UUID Generator.
+    @GenericGenerator(name = "custom_generator", strategy = "uuid2") //Definition of Generator used above with strategy.
+    @Column(name = "ID", columnDefinition = "binary(16)", nullable = false, updatable = false)
+    private UUID id;
     /**
      * TODO Audit Fields
      */
